@@ -60,7 +60,7 @@ function nowPlaying() {
 	$.post('http://www.animenfo.com/radio/nowplaying.php', {'ajax':'true','mod':'playing'}, function(data) {
 		var tmp = $(data);
 		var img = tmp.find('td:first img').attr('src');
-		var info = tmp.find('td:last').text().split('\n');
+		var info = tmp.find('tr:first').text().split('\n');
 		
 		currentSong['image'] = 'http://www.animenfo.com/radio/'+img;
 		jQuery.each(info,function() {
