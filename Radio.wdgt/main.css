@@ -13,41 +13,70 @@ body {
     display: block;
     top: 0px;
     left: 0px;
-    right: 20px;
-    width: auto;
     bottom: 0px;
+    right: 0px;
+    width: auto;
     height: auto;
 }
 
-#nowPlaying {
+#back {
+    display: none;
+}
+
+#backImg {
     position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: auto;
+    height: auto;
+}
+
+#songinfo {
+    position: absolute;
+    color: black;
     font-family: HelveticaNeue-Bold;
     font-size: 11pt;
-    top: 24px;
-    left: 24px;
-    color: rgb(255, 255, 0);
-    text-shadow: rgb(255, 128, 0) 0px 0px 0px;
-    right: 44px;
-    width: auto;
-    bottom: 58px;
+    width: 348px;
+    top: 30px;
+    right: 23px;
+    margin-left: auto;
+    left: 29px;
+    margin-right: auto;
+    bottom: 27px;
     height: auto;
 }
 
-#front {
-    margin-left: 0px;
-    margin-right: 0px;
-    width: auto;
-    min-height: 0px;
-    height: auto;
-}
-
-#topRectangleShape {
+#upcoming {
     position: absolute;
-    right: auto;
-    bottom: auto;
+    right: 21px;
+    margin-left: auto;
+    bottom: 21px;
+    margin-top: auto;
+}
+
+#now_playing {
+    position: absolute;
+    right: 21px;
+    bottom: 21px;
+    margin-left: auto;
+    margin-top: auto;
+}
+
+#upcoming_list {
+    color: black;
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
     margin-top: 0px;
-    top: 13px;
-    left: 13px;
-    height: 19px;
-    width: 455px;
+    left: 31px;
+    top: 31px;
+    right: 31px;
+    width: auto;
+    bottom: 50px;
+    height: auto;
 }

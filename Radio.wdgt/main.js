@@ -8,93 +8,130 @@
 // Function: load()
 // Called by HTML body element's onload event when the widget is ready to start
 //
-function load() {
-	/*
-	dashcode.setupParts();
-	*/
+function load()
+{
+    dashcode.setupParts();
 }
 
 //
 // Function: remove()
 // Called when the widget has been removed from the Dashboard
 //
-function remove() {
-	// Stop any timers to prevent CPU usage
-	// Remove any preferences as needed
-	// widget.setPreferenceForKey(null, dashcode.createInstancePreferenceKey("your-key"));
+function remove()
+{
+    // Stop any timers to prevent CPU usage
+    // Remove any preferences as needed
+    // widget.setPreferenceForKey(null, dashcode.createInstancePreferenceKey("your-key"));
 }
 
 //
 // Function: hide()
 // Called when the widget has been hidden
 //
-function hide() {
-	// Stop any timers to prevent CPU usage
+function hide()
+{
+    // Stop any timers to prevent CPU usage
 }
 
 //
 // Function: show()
 // Called when the widget has been shown
 //
-function show() {
-	// Restart any timers that were stopped on hide
-	nowPlaying();
-	upcomming();
+function show()
+{
+    // Restart any timers that were stopped on hide
+	update_song();
 }
 
-var currentSong = {};
-var upcommingSongs = [];
-
-function redraw() {
-	$('#album-art').attr('src',currentSong['image']);
-	$('#artist').text(currentSong['artist']);
-	$('#title').text(currentSong['title']);
-	$('#album').text(currentSong['album']);
-	$('#duration').text(currentSong['duration']);
-	$('#rating').text(currentSong['rating']);
-	alert(upcommingSongs);
-}
-
-function nowPlaying() {
-	$('#loader').show();
-	$.post('http://www.animenfo.com/radio/nowplaying.php', {'ajax':'true','mod':'playing'}, function(data) {
-		var tmp = $(data);
-		var img = tmp.find('td:first img').attr('src');
-		var info = tmp.find('tr:first').text().split('\n');
-		
-		currentSong['image'] = 'http://www.animenfo.com/radio/'+img;
-		jQuery.each(info,function() {
-			try {
-				var item = jQuery.trim(this);
-				if(item=='') return true; //continue;
-				item = item.replace(':','\n');
-				item = item.split('\n');
-				key = item[0].toLowerCase();
-				value = jQuery.trim(item[1]);
-				if(value=='') return true; //continue;
-				currentSong[key] = value;
-			} catch(err) {
-				return true; //continue;
-			}
-		});
-		$('#loader').hide();
-		redraw();
+function update_song() {
+	system("/usr/bin/python Bin/playing.py",function(obj) {
+		if(obj.status != 0) {
+			$('#songinfo').text(obj.errorString);
+			return;
+		}
+		$('#songinfo').html(obj.outputString);
 	});
 }
 
-function upcomming() {
-	$.post('http://www.animenfo.com/radio/nowplaying.php', {'ajax':'true','mod':'queue'}, function(data) {
-		upcommingSongs = [];
-		$(data).find('tr td').each(function() {
-			var song = jQuery.trim($(this).text());
-			upcommingSongs.push(song);
-		});
-		redraw();
+function update_upcomming() {
+	system("/usr/bin/python Bin/upcomming.py",function(obj) {
+		if(obj.status != 0) {
+			$('#upcoming_list').text(obj.outputString);
+			return;
+		}
+		$('#upcoming_list').html(obj.outputString);
 	});
+}
+
+//
+// Function: sync()
+// Called when the widget has been synchronized with .Mac
+//
+function sync()
+{
+    // Retrieve any preference values that you need to be synchronized here
+    // Use this for an instance key's value:
+    // instancePreferenceValue = widget.preferenceForKey(null, dashcode.createInstancePreferenceKey("your-key"));
+    //
+    // Or this for global key's value:
+    // globalPreferenceValue = widget.preferenceForKey(null, "your-key");
+}
+
+//
+// Function: showBack(event)
+// Called when the info button is clicked to show the back of the widget
+//
+// event: onClick event from the info button
+//
+function showBack(event)
+{
+    var front = document.getElementById("front");
+    var back = document.getElementById("back");
+
+    if (window.widget) {
+        widget.prepareForTransition("ToBack");
+    }
+	update_upcomming();
+    front.style.display = "none";
+    back.style.display = "block";
+
+    if (window.widget) {
+        setTimeout('widget.performTransition();', 0);
+    }
+}
+
+//
+// Function: showFront(event)
+// Called when the done button is clicked from the back of the widget
+//
+// event: onClick event from the done button
+//
+function showFront(event)
+{
+    var front = document.getElementById("front");
+    var back = document.getElementById("back");
+
+    if (window.widget) {
+        widget.prepareForTransition("ToFront");
+    }
+	update_song();
+    front.style.display="block";
+    back.style.display="none";
+
+    if (window.widget) {
+        setTimeout('widget.performTransition();', 0);
+    }
 }
 
 if (window.widget) {
-	widget.onremove = remove;
-	widget.onhide = hide;
-	widget.onshow = show;
+    widget.onremove = remove;
+    widget.onhide = hide;
+    widget.onshow = show;
+    widget.onsync = sync;
+}
+
+function system ( command, callback ) {
+	if ( window.widget ) {
+		widget.system(command, callback);
+	}
 }

@@ -5,5 +5,6 @@
  code generator otherwise the changes will be lost.
  */
 var localizedStrings = {
-    "loading": "Loading . . ."
+    "now_playing": "Now Playing",
+    "upcoming": "Upcomming"
 };

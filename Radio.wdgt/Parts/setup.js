@@ -5,6 +5,8 @@
  code generator otherwise the changes will be lost.
  */
 var dashcodePartSpecs = {
-    "done": { "creationFunction": "CreateGlassButton", "onclick": "showFront", "text": "Done" },
-    "nowPlaying": { "creationFunction": "CreateText", "text": "loading" }
+    "now_playing": { "creationFunction": "CreateGlassButton", "onclick": "showFront", "text": "now_playing" },
+    "songinfo": { "creationFunction": "CreateText", "text": "Loading..." },
+    "upcoming": { "creationFunction": "CreateGlassButton", "onclick": "showBack", "text": "upcoming" },
+    "upcoming_list": { "creationFunction": "CreateText", "text": "Loading . . . " }
 };
