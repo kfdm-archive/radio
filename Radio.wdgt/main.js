@@ -31,6 +31,9 @@ function remove()
 function hide()
 {
     // Stop any timers to prevent CPU usage
+	var back = document.getElementById("back");
+	if(front.style.display!="block")
+		showFrontPanel();
 }
 
 //
@@ -85,13 +88,18 @@ function sync()
 //
 function showBack(event)
 {
+	update_upcomming();
+	showBackPanel();
+}
+function showBackPanel()
+{
     var front = document.getElementById("front");
     var back = document.getElementById("back");
 
     if (window.widget) {
         widget.prepareForTransition("ToBack");
     }
-	update_upcomming();
+	
     front.style.display = "none";
     back.style.display = "block";
 
@@ -108,13 +116,18 @@ function showBack(event)
 //
 function showFront(event)
 {
+	update_song();
+	showFrontPanel();
+}
+function showFrontPanel()
+{
     var front = document.getElementById("front");
     var back = document.getElementById("back");
 
     if (window.widget) {
         widget.prepareForTransition("ToFront");
     }
-	update_song();
+	
     front.style.display="block";
     back.style.display="none";
 
