@@ -4,6 +4,8 @@
  according to the license.txt file included in the project.
  */
 
+var timer = 1;
+var hideTime = unix_time();
 //
 // Function: load()
 // Called by HTML body element's onload event when the widget is ready to start
@@ -22,6 +24,7 @@ function remove()
     // Stop any timers to prevent CPU usage
     // Remove any preferences as needed
     // widget.setPreferenceForKey(null, dashcode.createInstancePreferenceKey("your-key"));
+	$(document).stopTime();
 }
 
 //
@@ -30,10 +33,17 @@ function remove()
 //
 function hide()
 {
+	alert('hide()');
+	hideTime = unix_time();
+	$(document).stopTime();
     // Stop any timers to prevent CPU usage
 	var back = document.getElementById("back");
 	if(front.style.display!="block")
-		showFrontPanel();
+		showFront(null);
+}
+
+function unix_time() {
+	return Math.ceil(new Date().getTime()/1000);
 }
 
 //
@@ -42,21 +52,56 @@ function hide()
 //
 function show()
 {
-    // Restart any timers that were stopped on hide
-	update_song();
+	alert('show()');
+	var sleepTime = unix_time()-hideTime;
+	alert(timer);
+	alert(sleepTime);
+	timer = timer - sleepTime;
+	alert(timer);
+	if( timer < 0) {
+		update_song();
+		update_upcomming();
+	} else {
+		$(document).everyTime(1000,'update_time()',update_time);
+	}
+}
+
+function update_time() {
+	if(--timer<=0) {
+		alert('update_time()');
+		$(document).stopTime('update_time()');
+		update_song();
+		update_upcomming();
+		return;
+	}
+	
+	var min = Math.floor(timer / 60);
+	var sec = Math.floor(timer % 60);
+	if(sec < 10) sec = '0'+sec;
+	$('#duration').text(' '+min+':'+sec+' ');
 }
 
 function update_song() {
+	alert('update_song()');
 	system("/usr/bin/python Bin/playing.py",function(obj) {
 		if(obj.status != 0) {
 			$('#songinfo').text(obj.errorString);
+			//Try again in 10 seconds
+			$(document).oneTime(10000,'update_song()',update_song);
 			return;
 		}
+		
 		$('#songinfo').html(obj.outputString);
+		timer = $('#timer').text();
+		$('img').click(function(){
+			widget.openURL('http://www.animenfo.com/radio/listen.m3u');
+		});
+		$(document).everyTime(1000,'update_time()',update_time);
 	});
 }
 
 function update_upcomming() {
+	alert('update_upcomming()');
 	system("/usr/bin/python Bin/upcomming.py",function(obj) {
 		if(obj.status != 0) {
 			$('#upcoming_list').text(obj.outputString);
@@ -88,11 +133,7 @@ function sync()
 //
 function showBack(event)
 {
-	update_upcomming();
-	showBackPanel();
-}
-function showBackPanel()
-{
+	alert('showBack()');
     var front = document.getElementById("front");
     var back = document.getElementById("back");
 
@@ -116,11 +157,7 @@ function showBackPanel()
 //
 function showFront(event)
 {
-	update_song();
-	showFrontPanel();
-}
-function showFrontPanel()
-{
+	alert('showFront()');
     var front = document.getElementById("front");
     var back = document.getElementById("back");
 
