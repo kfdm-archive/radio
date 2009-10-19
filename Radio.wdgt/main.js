@@ -93,9 +93,6 @@ function update_song() {
 		
 		$('#songinfo').html(obj.outputString);
 		timer = $('#timer').text();
-		$('img').click(function(){
-			widget.openURL('http://www.animenfo.com/radio/listen.m3u');
-		});
 		$(document).everyTime(1000,'update_time()',update_time);
 	});
 }
