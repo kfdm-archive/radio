@@ -1,3 +1,3 @@
 import AnimeNFO
-for song in AnimeNFO.upcomming():
+for song in AnimeNFO.upcoming():
 	print song,"<hr />"

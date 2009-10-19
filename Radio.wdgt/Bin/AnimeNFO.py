@@ -59,7 +59,7 @@ def now_playing():
 	
 	return song
 
-def upcomming():
+def upcoming():
 	url = 'http://www.animenfo.com/radio/nowplaying.php'
 	data = urllib.urlencode({'ajax':'true','mod':'queue','togglefull':'true'})
 	page = urllib.urlopen(url, data)
@@ -80,11 +80,11 @@ def upcomming():
 
 if __name__=='__main__':
 	song = now_playing()
-	list = upcomming()
+	list = upcoming()
 	print 'Now Playing'
 	print song
 	print song.image
 	print
-	print 'Upcomming'
+	print 'upcoming'
 	for item in list:
 		print item

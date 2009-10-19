@@ -60,7 +60,7 @@ function show()
 	alert(timer);
 	if( timer < 0) {
 		update_song();
-		update_upcomming();
+		update_upcoming();
 	} else {
 		$(document).everyTime(1000,'update_time()',update_time);
 	}
@@ -71,7 +71,7 @@ function update_time() {
 		alert('update_time()');
 		$(document).stopTime('update_time()');
 		update_song();
-		update_upcomming();
+		update_upcoming();
 		return;
 	}
 	
@@ -97,9 +97,9 @@ function update_song() {
 	});
 }
 
-function update_upcomming() {
-	alert('update_upcomming()');
-	system("/usr/bin/python Bin/upcomming.py",function(obj) {
+function update_upcoming() {
+	alert('update_upcoming()');
+	system("/usr/bin/python Bin/upcoming.py",function(obj) {
 		if(obj.status != 0) {
 			$('#upcoming_list').text(obj.outputString);
 			return;

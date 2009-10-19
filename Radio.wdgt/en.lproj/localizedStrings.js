@@ -6,5 +6,5 @@
  */
 var localizedStrings = {
     "now_playing": "Now Playing",
-    "upcoming": "Upcomming"
+    "upcoming": "Upcoming"
 };
