@@ -4,7 +4,6 @@
  however it is recommended to first turn off the Dashcode 
  code generator otherwise the changes will be lost.
  */
-var localizedStrings = {
-    "now_playing": "Now Playing",
-    "upcoming": "Upcoming"
+var dashcodeDataSources = {
+    "dataSource": { "Class": "DC.AjaxController" }
 };

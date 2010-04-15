@@ -9,24 +9,24 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>AnimeNFO</string>
+	<string>Untitled</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.kungfudiscomonkey.widget.AnimeNFORadio</string>
+	<string>net.kungfudiscomonkey.animenfo</string>
 	<key>CFBundleName</key>
-	<string>AnimeNFO2</string>
+	<string>Untitled</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CloseBoxInsetX</key>
 	<integer>15</integer>
 	<key>CloseBoxInsetY</key>
 	<integer>15</integer>
 	<key>Height</key>
-	<integer>400</integer>
+	<integer>234</integer>
 	<key>MainHTML</key>
 	<string>main.html</string>
 	<key>Width</key>
-	<integer>400</integer>
+	<integer>460</integer>
 </dict>
 </plist>
